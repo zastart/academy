@@ -241,32 +241,46 @@
   /* ---------- problem ---------- */
   #problem{padding-top:clamp(24px,4vw,56px);}
   .problem-head{grid-column:1/8;}
-  .fear-grid{grid-column:1/-1; margin-top:var(--sp-6); display:grid; grid-template-columns:7fr 5fr; gap:24px;}
-  @media (max-width:800px){ .fear-grid{grid-template-columns:1fr;} }
-  .fear-hero{
-    background:var(--white); border:1px solid var(--soft-grey); border-radius:4px;
-    padding:var(--sp-6) var(--sp-5); display:flex; flex-direction:column; justify-content:center;
-  }
-  .fear-hero .num{font-size:var(--caption); font-weight:700; color:var(--burgundy); letter-spacing:.08em;}
-  .fear-hero .fear-big{
-    margin-top:16px; font-family:'Golos Text','Inter',sans-serif; font-size:var(--h1); font-weight:700; line-height:1.16; color:var(--graphite);
-  }
-  .fear-stack{display:flex; flex-direction:column; gap:24px;}
-  .fear-card{
-    background:var(--white); border:1px solid var(--soft-grey); border-radius:4px; padding:var(--sp-4);
-    flex:1; display:flex; flex-direction:column; justify-content:center;
-  }
-  .fear-card .num{font-size:var(--caption); font-weight:700; color:var(--burgundy); letter-spacing:.08em;}
-  .fear-card p{margin-top:12px; font-size:1rem; color:var(--graphite);}
-  .cost-line{
+  .fear-stage{
     grid-column:1/-1; margin-top:var(--sp-6);
-    font-family:'Golos Text','Inter',sans-serif; font-weight:600;
-    font-size:clamp(1.15rem,2.2vw,1.5rem); line-height:1.4; color:var(--graphite);
-    padding:var(--sp-4) var(--sp-5); border-left:3px solid var(--burgundy);
-    background:var(--white);
+    position:relative; height:230vh;
   }
-  .closing-line{grid-column:1/9; margin-top:var(--sp-6); font-size:var(--body-l); color:var(--graphite);}
-  .closing-line b{color:var(--burgundy);}
+  .fear-grid{
+    position:sticky; top:120px;
+    display:grid; grid-template-columns:1fr; grid-template-rows:1fr;
+  }
+  @media (max-width:720px){
+    .fear-stage{height:auto;}
+    .fear-grid{position:static; grid-template-rows:auto;}
+  }
+  .fear-card{
+    grid-column:1; grid-row:1;
+    background:var(--white); border:1px solid var(--soft-grey); border-radius:4px;
+    padding:var(--sp-7) var(--sp-6);
+    min-height:56vh; display:flex; flex-direction:column; justify-content:center;
+    opacity:0; transform:translateY(60px) scale(.92); pointer-events:none;
+    box-shadow:0 4px 14px rgba(29,39,51,.05);
+    transition:transform .55s var(--ease), opacity .4s var(--ease), box-shadow .45s var(--ease);
+  }
+  .fear-card.reached{opacity:1; pointer-events:auto;}
+  .fear-card.active{box-shadow:0 26px 50px rgba(29,39,51,.16); z-index:10;}
+  .fear-card[data-step="1"].reached{transform:translateY(-28px) scale(.94); z-index:1;}
+  .fear-card[data-step="2"].reached{transform:translateY(-14px) scale(.97); z-index:2;}
+  .fear-card[data-step="3"].reached{transform:translateY(0) scale(1); z-index:3;}
+  .fear-card.reached.active{transform:translateY(0) scale(1);}
+  .fear-card .num{font-size:var(--caption); font-weight:700; color:var(--burgundy); letter-spacing:.08em;}
+  .fear-card p:not(.num){
+    margin-top:16px; font-family:'Golos Text','Inter',sans-serif;
+    font-size:var(--h1); font-weight:700; line-height:1.2; color:var(--graphite);
+    max-width:22ch;
+  }
+  @media (max-width:720px){
+    .fear-card{grid-column:auto; grid-row:auto; position:relative; opacity:1; transform:none; pointer-events:auto; min-height:0; margin-bottom:16px;}
+    .fear-card p:not(.num){font-size:var(--h2);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .fear-card{transition:none;}
+  }
   .founder-note{
     grid-column:1/9; margin-top:var(--sp-4);
     font-size:.95rem; font-style:italic; color:var(--graphite-70); line-height:1.5;
@@ -828,29 +842,25 @@
       <div class="problem-head reveal">
         <p class="eyebrow">Проблема</p>
         <h2>Дело не в количестве уроков.<br>Дело в ясном маршруте.</h2>
-        <p class="lede" style="margin-top:20px;">Вы уже пробовали учить английский — возможно, не один раз. Курсы, приложения, репетиторы, которые обещали результат «уже через месяц». Дело не в способностях. Дело в том, что вы не видели маршрут — и в какой-то момент просто останавливались.</p>
+        <p class="lede" style="margin-top:20px;">Вы уже пробовали — не раз. Дело не в способностях, а в том, что вы не видели маршрут.</p>
       </div>
 
-      <div class="fear-grid">
-        <div class="fear-hero reveal tilt">
-          <p class="num">01</p>
-          <p class="fear-big">Простой вопрос на границе — и секундная паника вместо ответа.</p>
-        </div>
-        <div class="fear-stack">
-          <div class="fear-card reveal tilt">
+      <div class="fear-stage">
+        <div class="fear-grid">
+          <div class="fear-card reached active" data-step="1">
+            <p class="num">01</p>
+            <p>Простой вопрос на границе — и секундная паника вместо ответа.</p>
+          </div>
+          <div class="fear-card" data-step="2">
             <p class="num">02</p>
-            <p>Взрослый человек с работой и семьёй — и снова школьник у доски.</p>
+            <p>На работе — уверенный профессионал. На английском — снова школьник у доски.</p>
           </div>
-          <div class="fear-card reveal tilt">
+          <div class="fear-card" data-step="3">
             <p class="num">03</p>
-            <p>Ребёнок рядом справляется с этим легче, чем вы.</p>
+            <p>Ребёнок в поездке переводит быстрее, чем вы говорите сами.</p>
           </div>
         </div>
       </div>
-
-      <p class="cost-line reveal">Через год вы либо будете свободно проходить собеседования и созвоны на английском — либо снова будете листать курсы, обещающие то же самое. Разница — в маршруте, который вы выбираете сегодня.</p>
-
-      <p class="closing-line reveal">ZA START строится вокруг одного принципа: в любой момент вы понимаете, <b>где вы сейчас и что дальше.</b></p>
 
       <p class="founder-note reveal">«Мы увидели, что взрослые учат английский без ясного маршрута — и создали систему, где путь, практика и поддержка работают как единое целое.»<br><span>— Основатели ZA START, оба с педагогическим образованием: методология и работа с людьми.</span></p>
     </div>
@@ -1192,6 +1202,22 @@
   // ===== master scroll handler (site progress + timeline + wordmark strip) =====
   let ticking = false;
   const siteProgressBar = document.getElementById('siteProgressBar');
+  const fearStage = document.querySelector('.fear-stage');
+  const fearCards = fearStage ? Array.from(fearStage.querySelectorAll('.fear-card[data-step]')) : [];
+
+  function updateFearStage(){
+    if(!fearStage || !fearCards.length) return;
+    const rect = fearStage.getBoundingClientRect();
+    const pinnableRange = rect.height - window.innerHeight;
+    let progress = (120 - rect.top) / Math.max(1, pinnableRange);
+    progress = Math.max(0, Math.min(1, progress));
+    const activeIndex = Math.min(fearCards.length - 1, Math.floor(progress * fearCards.length));
+    fearCards.forEach((card, i) => {
+      card.classList.toggle('reached', i <= activeIndex);
+      card.classList.toggle('active', i === activeIndex);
+    });
+  }
+
   function onScroll(){
     const scrolled = window.scrollY;
 
@@ -1201,6 +1227,7 @@
       siteProgressBar.style.width = pct + '%';
     }
 
+    updateFearStage();
     updateWordmarkStrip();
     ticking = false;
   }
@@ -1299,7 +1326,7 @@
     document.body.style.top = '';
     document.body.style.left = '';
     document.body.style.right = '';
-    window.scrollTo(0, overlayScrollY);
+    window.scrollTo({top: overlayScrollY, left: 0, behavior: 'instant'});
   }
 
   if(wsStart){
