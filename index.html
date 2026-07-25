@@ -145,6 +145,17 @@
   .btn-ghost:hover{border-color:var(--graphite); background:var(--white);}
   .btn-arrow{transition:transform .25s var(--ease);}
   .btn:hover .btn-arrow{transform:translateX(3px);}
+  .link-secondary{
+    display:inline-flex; align-items:center; gap:6px;
+    background:none; border:none;
+    font-size:.88rem; font-weight:500;
+    color:var(--neutral);
+    text-decoration:none;
+    transition:color .2s var(--ease);
+  }
+  .link-secondary:hover{color:var(--graphite); text-decoration:underline; text-underline-offset:3px;}
+  .link-secondary .btn-arrow{transition:transform .25s var(--ease);}
+  .link-secondary:hover .btn-arrow{transform:translateX(3px);}
 
   /* ---------- nav ---------- */
   header{
@@ -198,7 +209,7 @@
   .hero h1 .accent{color:var(--burgundy);}
   .hero-sub{font-size:var(--h2); font-weight:500; color:var(--graphite-70); margin-top:var(--sp-2); line-height:1.25;}
   .hero-lede{margin-top:var(--sp-4); margin-left:auto; margin-right:auto;}
-  .hero-actions{display:flex; align-items:center; justify-content:center; gap:22px; margin-top:var(--sp-5); flex-wrap:wrap;}
+  .hero-actions{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; margin-top:var(--sp-5); flex-wrap:wrap;}
   .hero-formula{
     margin-top:var(--sp-6);
     font-size:var(--caption); letter-spacing:.08em; text-transform:uppercase;
@@ -847,7 +858,7 @@
         <p class="lede hero-lede">Ясная система английского для взрослых, которые ценят время, качество и реальный результат.</p>
         <div class="hero-actions">
           <a class="btn btn-primary btn-magnetic" href="#trial">Начать с пробного занятия</a>
-          <a class="btn btn-ghost btn-magnetic" href="#method">Посмотреть, как устроен маршрут <span class="btn-arrow">→</span></a>
+          <a class="link-secondary" href="#method">Посмотреть, как устроен маршрут <span class="btn-arrow">→</span></a>
         </div>
         <p class="hero-formula">Формула: Изучение <span>→</span> Практика <span>→</span> Прогресс</p>
       </div>
