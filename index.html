@@ -278,59 +278,46 @@
   /* ---------- problem ---------- */
   #problem{padding-top:clamp(24px,4vw,56px);}
   .problem-head{grid-column:1/8;}
-  .fear-stage{
-    grid-column:1/-1; margin-top:var(--sp-6);
-    position:relative; height:230vh;
-  }
+  .fear-stage{grid-column:1/-1; margin-top:var(--sp-6); position:relative;}
   .fear-grid{
-    position:sticky; top:120px;
-    display:grid; grid-template-columns:1fr; grid-template-rows:1fr;
+    display:flex; width:100%; overflow-x:auto; scroll-snap-type:x mandatory;
+    gap:16px; padding-bottom:8px; -webkit-overflow-scrolling:touch;
   }
+  .fear-grid::-webkit-scrollbar{display:none;}
   .fear-card{
-    grid-column:1; grid-row:1;
+    flex:0 0 100%; width:100%; scroll-snap-align:center;
     background:var(--white); border:1px solid var(--soft-grey); border-radius:4px;
     padding:var(--sp-7) var(--sp-6);
-    min-height:56vh; display:flex; flex-direction:column; justify-content:center;
-    opacity:0; transform:translateY(60px) scale(.92); pointer-events:none;
-    box-shadow:0 4px 14px rgba(29,39,51,.05);
-    transition:transform .55s var(--ease), opacity .4s var(--ease), box-shadow .45s var(--ease);
+    min-height:52vh; display:flex; flex-direction:column; justify-content:center;
+    box-shadow:0 8px 24px rgba(29,39,51,.08);
   }
-  .fear-card.reached{opacity:1; pointer-events:auto;}
-  .fear-card.active{box-shadow:0 26px 50px rgba(29,39,51,.16); z-index:10;}
-  .fear-card[data-step="1"].reached{transform:translateY(-28px) scale(.94); z-index:1;}
-  .fear-card[data-step="2"].reached{transform:translateY(-14px) scale(.97); z-index:2;}
-  .fear-card[data-step="3"].reached{transform:translateY(0) scale(1); z-index:3;}
-  .fear-card.reached.active{transform:translateY(0) scale(1);}
   .fear-card .num{font-size:var(--caption); font-weight:700; color:var(--burgundy); letter-spacing:.08em;}
   .fear-card p:not(.num){
     margin-top:16px; font-family:'Golos Text','Inter',sans-serif;
     font-size:var(--h1); font-weight:700; line-height:1.2; color:var(--graphite);
     max-width:22ch;
   }
-  .fear-swipe-hint{display:none;}
+  .fear-swipe-hint{
+    text-align:center; margin-top:10px;
+    font-size:.78rem; letter-spacing:.04em; color:var(--neutral);
+  }
+  .fear-nav{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--soft-grey);
+    background:var(--white); color:var(--graphite); font-size:1.1rem;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 6px 16px rgba(29,39,51,.1);
+    transition:background .2s, transform .2s;
+  }
+  .fear-nav:hover{background:var(--soft-grey);}
+  .fear-nav-prev{left:-20px;}
+  .fear-nav-next{right:-20px;}
+  @media (hover:none), (max-width:900px){
+    .fear-nav{display:none;}
+  }
   @media (max-width:720px){
-    .fear-stage{height:auto;}
-    .fear-swipe-hint{
-      display:block; text-align:center; margin-top:10px;
-      font-size:.78rem; letter-spacing:.04em; color:var(--neutral);
-    }
-    .fear-grid{
-      position:static; display:flex; grid-template-columns:none;
-      width:100%; overflow-x:auto; scroll-snap-type:x mandatory; gap:14px;
-      padding-bottom:6px; -webkit-overflow-scrolling:touch;
-    }
-    .fear-grid::-webkit-scrollbar{display:none;}
-    .fear-card{
-      grid-column:auto; grid-row:auto;
-      flex:0 0 auto; width:calc(100vw - 60px); scroll-snap-align:center;
-      opacity:1 !important; transform:none !important; pointer-events:auto !important;
-      box-shadow:0 8px 20px rgba(29,39,51,.08) !important;
-    }
     .fear-card{padding:var(--sp-6) var(--sp-4); min-height:46vh;}
     .fear-card p:not(.num){font-size:var(--h2);}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .fear-card{transition:none;}
   }
   .founder-note{
     grid-column:1/9; margin-top:var(--sp-4);
@@ -441,11 +428,11 @@
   .fit-head .lede{color:rgba(247,243,236,.65);}
   .fit-cols{grid-column:1/-1; margin-top:var(--sp-6); display:grid; grid-template-columns:1fr 1fr; gap:32px;}
   @media (max-width:720px){
-    .fit-cols{grid-template-columns:1fr;}
+    .fit-cols{display:flex; flex-direction:column; align-items:center; gap:24px;}
     .fit-head{text-align:center;}
     .fit-head .eyebrow{justify-content:center;}
     .fit-head .eyebrow::before{display:none;}
-    .fit-col{max-width:88%; margin-left:auto; margin-right:auto;}
+    .fit-col{width:88%; max-width:400px;}
   }
   .fit-bridge{
     grid-column:1/-1; display:block; text-align:center; margin-top:var(--sp-6);
@@ -945,8 +932,8 @@
       </div>
 
       <div class="fear-stage">
-        <div class="fear-grid">
-          <div class="fear-card reached active" data-step="1">
+        <div class="fear-grid" id="fearGrid">
+          <div class="fear-card" data-step="1">
             <p class="num">01</p>
             <p>Простой вопрос на границе — и секундная паника вместо ответа.</p>
           </div>
@@ -959,6 +946,8 @@
             <p>В компании за границей вы киваете, а не говорите.</p>
           </div>
         </div>
+        <button type="button" class="fear-nav fear-nav-prev" id="fearPrev" aria-label="Предыдущая карточка">←</button>
+        <button type="button" class="fear-nav fear-nav-next" id="fearNext" aria-label="Следующая карточка">→</button>
       </div>
       <p class="fear-swipe-hint">← Листайте карточки →</p>
 
@@ -1281,25 +1270,9 @@
     }
   }
 
-  // ===== master scroll handler (site progress + timeline + wordmark strip) =====
+  // ===== master scroll handler (site progress + wordmark strip) =====
   let ticking = false;
   const siteProgressBar = document.getElementById('siteProgressBar');
-  const fearStage = document.querySelector('.fear-stage');
-  const fearCards = fearStage ? Array.from(fearStage.querySelectorAll('.fear-card[data-step]')) : [];
-
-  function updateFearStage(){
-    if(!fearStage || !fearCards.length) return;
-    const rect = fearStage.getBoundingClientRect();
-    const stickyOffset = window.innerWidth <= 720 ? 80 : 120;
-    const pinnableRange = rect.height - window.innerHeight;
-    let progress = (stickyOffset - rect.top) / Math.max(1, pinnableRange);
-    progress = Math.max(0, Math.min(1, progress));
-    const activeIndex = Math.min(fearCards.length - 1, Math.floor(progress * fearCards.length));
-    fearCards.forEach((card, i) => {
-      card.classList.toggle('reached', i <= activeIndex);
-      card.classList.toggle('active', i === activeIndex);
-    });
-  }
 
   function onScroll(){
     const scrolled = window.scrollY;
@@ -1310,7 +1283,6 @@
       siteProgressBar.style.width = pct + '%';
     }
 
-    updateFearStage();
     updateWordmarkStrip();
     ticking = false;
   }
@@ -1381,6 +1353,19 @@
     });
   }
 
+  // ===== fear-card carousel: arrow button navigation =====
+  const fearGrid = document.getElementById('fearGrid');
+  const fearPrev = document.getElementById('fearPrev');
+  const fearNext = document.getElementById('fearNext');
+  if(fearGrid && fearPrev && fearNext){
+    const scrollByCard = (dir) => {
+      const cardWidth = fearGrid.querySelector('.fear-card').getBoundingClientRect().width;
+      fearGrid.scrollBy({left: dir * (cardWidth + 16), behavior: reduceMotion ? 'auto' : 'smooth'});
+    };
+    fearPrev.addEventListener('click', () => scrollByCard(-1));
+    fearNext.addEventListener('click', () => scrollByCard(1));
+  }
+
   // ===== phone fields: keep cursor after the pre-filled "+7 " on focus =====
   ['soPhone', 'fContact', 'hPhone'].forEach((id) => {
     const field = document.getElementById(id);
@@ -1405,25 +1390,43 @@
     validatePhone();
   });
 
-  // trial form — front-end only demo submission
+  // ===== Google Sheets submission (all forms) =====
+  const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycby8lGIrXtuOLa99lI46OKu3mLBGZGQQHVN2rDxYaXqQLYEdKMpb3uHPnRBL2kLBwDsPjQ/exec';
+  function submitToSheet(name, phone, consent, source){
+    fetch(SHEET_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify({name, phone, consent, source})
+    }).catch(() => {});
+  }
+
+  // trial form — sends to Google Sheet
   const form = document.getElementById('trialForm');
   const success = document.getElementById('formSuccess');
   form.addEventListener('submit', (e)=>{
     e.preventDefault();
+    const name = document.getElementById('fName').value;
+    const phone = document.getElementById('fContact').value;
+    const consent = document.getElementById('fConsent').checked;
+    submitToSheet(name, phone, consent, 'bottom form');
     success.classList.add('show');
-    form.querySelectorAll('input').forEach(i=>i.value='');
+    form.querySelectorAll('input[type="text"], input[type="tel"]').forEach(i=>i.value='');
+    document.getElementById('fContact').value = '+7 ';
+    document.getElementById('fConsent').checked = false;
   });
 
-  // hero form — front-end only demo submission
+  // hero form — sends to Google Sheet
   const heroForm = document.getElementById('heroForm');
   const heroFormSuccess = document.getElementById('heroFormSuccess');
   if(heroForm){
     heroForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      heroFormSuccess.classList.add('show');
       const nameField = document.getElementById('hName');
       const phoneField = document.getElementById('hPhone');
       const consentField = document.getElementById('hConsent');
+      submitToSheet(nameField.value, phoneField.value, consentField.checked, 'hero form');
+      heroFormSuccess.classList.add('show');
       if(nameField) nameField.value = '';
       if(phoneField) phoneField.value = '+7 ';
       if(consentField) consentField.checked = false;
@@ -1485,6 +1488,10 @@
   if(soForm){
     soForm.addEventListener('submit', (e) => {
       e.preventDefault();
+      const name = document.getElementById('soName').value;
+      const phone = document.getElementById('soPhone').value;
+      const consent = document.getElementById('soConsent').checked;
+      submitToSheet(name, phone, consent, 'popup');
       soSuccess.classList.add('show');
       soForm.style.display = 'none';
     });
