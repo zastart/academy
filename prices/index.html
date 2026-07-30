@@ -192,12 +192,14 @@
   .old-price.show{opacity:1;}
   .card.featured .old-price{color:var(--muted-on-dark);}
   .total-line{
-    font-size:13px;
-    color:var(--muted);
-    margin-bottom:6px;
-    height:18px;
+    font-size:17px;
+    font-weight:700;
+    color:var(--graphite);
+    margin-bottom:10px;
+    height:auto;
+    min-height:22px;
   }
-  .card.featured .total-line{color:var(--muted-on-dark);}
+  .card.featured .total-line{color:var(--ivory);}
   .savings-badge{
     display:inline-block;
     font-size:12.5px;
@@ -413,10 +415,10 @@
 
 <div class="wrap">
   <div class="toggle-row">
-    <div class="toggle" id="toggle" data-term="1">
+    <div class="toggle" id="toggle" data-term="3">
       <div class="thumb"></div>
-      <button id="btn1" class="active">1 месяц</button>
-      <button id="btn3">3 месяца</button>
+      <button id="btn1">1 месяц</button>
+      <button id="btn3" class="active">3 месяца</button>
     </div>
   </div>
   <div class="save-note" id="saveNote">Экономия 30 000 ₸ при оплате за 3 месяца</div>
@@ -523,7 +525,7 @@
   </table>
 </div>
 
-<div class="foot-note">Цены указаны в тенге. При оплате за 3 месяца цена фиксируется на весь период.</div>
+<div class="foot-note">Цены указаны в тенге. Скидки доступны при оплате на вводном уроке.</div>
 
 <script>
 
@@ -581,7 +583,7 @@
   btn1.addEventListener('click', ()=>render(1));
   btn3.addEventListener('click', ()=>render(3));
 
-  render(1);
+  render(3);
 </script>
 
 </div>
