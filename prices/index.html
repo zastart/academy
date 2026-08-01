@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Тарифы — ZA   START</title>
+<title>Цены — ZA   START</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -36,7 +36,7 @@
 
   /* ---------- HERO ---------- */
   .hero{
-    padding:96px 0 64px;
+    padding:96px 0 56px;
     text-align:center;
     border-bottom:1px solid var(--line);
   }
@@ -49,78 +49,90 @@
     margin-bottom:18px;
   }
   .hero h1{
-    font-size:clamp(32px,5vw,52px);
+    font-size:clamp(28px,4.5vw,42px);
     font-weight:700;
-    line-height:1.12;
-    margin:0 0 18px;
+    line-height:1.2;
+    margin:0;
     color:var(--graphite);
   }
-  .hero p{
-    font-size:18px;
-    color:var(--muted);
-    max-width:560px;
-    margin:0 auto;
-    line-height:1.5;
+
+  /* ---------- MANAGER TOGGLE (discreet, bottom of page) ---------- */
+  .manager-toggle-row{
+    text-align:center;
+    padding:24px 0 60px;
+  }
+  .manager-toggle{
+    border:none;
+    background:none;
+    color:var(--line);
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:400;
+    letter-spacing:0.02em;
+    cursor:pointer;
+    padding:6px 10px;
+    opacity:0.55;
+    transition:opacity .2s ease;
+  }
+  .manager-toggle:hover{opacity:1;}
+  .cards-two{
+    grid-template-columns:repeat(2,1fr);
+    max-width:600px;
   }
 
-  /* ---------- TOGGLE ---------- */
-  .toggle-row{
+  /* ---------- INCLUDED BLOCK ---------- */
+  .included-block{
+    padding:56px 0 8px;
+    text-align:center;
+  }
+  .included-block h2{
+    font-size:22px;
+    font-weight:700;
+    color:var(--graphite);
+    margin:0 0 32px;
+  }
+  .included-list{
+    list-style:none;
+    margin:0 auto;
+    padding:0;
+    max-width:920px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px 40px;
+    text-align:left;
+  }
+  .included-list li{
     display:flex;
-    justify-content:center;
-    margin:44px 0 12px;
+    gap:12px;
+    align-items:flex-start;
   }
-  .toggle{
-    position:relative;
-    display:inline-flex;
-    background:var(--graphite);
-    border-radius:999px;
-    padding:5px;
-    gap:2px;
+  .included-list .icon-badge{margin-top:1px;}
+  .included-text{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
   }
-  .toggle button{
-    position:relative;
-    z-index:2;
-    border:none;
-    background:transparent;
-    color:var(--muted-on-dark);
-    font-family:'Inter',sans-serif;
+  .included-text strong{
     font-size:15px;
     font-weight:600;
-    padding:12px 26px;
-    border-radius:999px;
-    cursor:pointer;
-    transition:color .3s ease;
+    color:var(--graphite);
+    line-height:1.35;
   }
-  .toggle button.active{color:var(--graphite);}
-  .toggle .thumb{
-    position:absolute;
-    top:5px; left:5px;
-    height:calc(100% - 10px);
-    width:calc(50% - 5px);
-    background:var(--ivory);
-    border-radius:999px;
-    transition:transform .35s cubic-bezier(.65,0,.35,1);
-    z-index:1;
+  .included-text em{
+    font-style:normal;
+    font-size:13.5px;
+    color:var(--muted);
+    line-height:1.4;
   }
-  .toggle[data-term="3"] .thumb{transform:translateX(100%);}
-  .save-note{
-    text-align:center;
-    font-size:14px;
-    color:var(--burgundy);
-    font-weight:600;
-    height:20px;
-    opacity:0;
-    transition:opacity .3s ease;
-    margin-bottom:40px;
-  }
-  .save-note.show{opacity:1;}
 
   /* ---------- CARDS ---------- */
   .cards{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-    padding:0 0 80px;
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+    max-width:820px;
+    margin:0 auto;
+    padding:64px 0 80px;
   }
   .card{
     background:#fff;
@@ -180,42 +192,45 @@
     color:var(--muted);
   }
   .card.featured .price small{color:var(--muted-on-dark);}
-  .old-price{
-    font-size:15px;
-    color:var(--muted);
-    text-decoration:line-through;
-    margin-top:6px;
-    opacity:0;
-    height:20px;
-    transition:opacity .3s ease;
-  }
-  .old-price.show{opacity:1;}
-  .card.featured .old-price{color:var(--muted-on-dark);}
   .total-line{
-    font-size:17px;
-    font-weight:700;
-    color:var(--graphite);
-    margin-bottom:10px;
-    height:auto;
-    min-height:22px;
+    font-size:14.5px;
+    font-weight:500;
+    color:var(--muted);
+    margin:6px 0 24px;
   }
-  .card.featured .total-line{color:var(--ivory);}
-  .savings-badge{
-    display:inline-block;
-    font-size:12.5px;
-    font-weight:700;
-    color:var(--burgundy);
-    background:rgba(123,41,64,0.08);
-    padding:4px 10px;
-    border-radius:999px;
-    margin-bottom:18px;
-    opacity:0;
-    height:0;
-    overflow:hidden;
-    transition:opacity .3s ease;
+  .card.featured .total-line{color:var(--muted-on-dark);}
+  .stamp{
+    position:absolute;
+    top:-18px; right:24px;
+    width:76px;
+    height:76px;
+    border-radius:50%;
+    background:var(--burgundy);
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    transform:rotate(-9deg);
+    border:2px solid rgba(247,243,236,0.5);
+    box-shadow:0 6px 16px rgba(0,0,0,0.28);
   }
-  .savings-badge.show{opacity:1; height:auto; margin-bottom:18px;}
-  .card.featured .savings-badge{background:rgba(247,243,236,0.15); color:var(--ivory);}
+  .stamp .stamp-num{
+    font-family:'Golos Text',sans-serif;
+    font-size:19px;
+    font-weight:800;
+    line-height:1;
+  }
+  .stamp .stamp-label{
+    font-size:8px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    line-height:1.15;
+    margin-top:3px;
+    padding:0 6px;
+  }
   .divider{
     height:1px;
     background:var(--line);
@@ -260,46 +275,6 @@
   .card.featured .icon-badge.no{background:rgba(247,243,236,0.10);}
   .card.featured .icon-badge.no svg path{stroke:#C9CFD6;}
 
-  /* ---------- COMPARISON TABLE ---------- */
-  .compare{
-    padding:0 0 100px;
-  }
-  .compare h2{
-    text-align:center;
-    font-size:28px;
-    font-weight:700;
-    margin-bottom:44px;
-  }
-  table{
-    width:100%;
-    border-collapse:collapse;
-    background:#fff;
-    border-radius:16px;
-    overflow:hidden;
-    border:1px solid var(--line);
-  }
-  th,td{
-    padding:18px 20px;
-    text-align:center;
-    font-size:14.5px;
-    border-bottom:1px solid var(--line);
-  }
-  th{
-    font-family:'Golos Text',sans-serif;
-    font-weight:600;
-    font-size:15px;
-    background:var(--ivory-dim);
-  }
-  td:first-child, th:first-child{
-    text-align:left;
-    color:var(--graphite);
-    font-weight:500;
-    width:38%;
-  }
-  tr:last-child td{border-bottom:none;}
-  .yes{color:var(--burgundy); font-weight:700;}
-  .no{color:var(--muted);}
-
   /* ---------- FOOT ---------- */
   .foot-note{
     text-align:center;
@@ -312,8 +287,7 @@
     .cards{grid-template-columns:1fr;}
     .card.featured{transform:none;}
     .card.featured:hover{transform:translateY(-4px);}
-    table{font-size:13px;}
-    th,td{padding:14px 10px;}
+    .included-list{grid-template-columns:1fr;}
   }
   @media(prefers-reduced-motion:reduce){
     *{transition:none !important;}
@@ -409,181 +383,141 @@
 
 <section class="hero wrap">
   <div class="eyebrow">Изучение → Практика → Прогресс</div>
-  <h1>Один маршрут.<br>Три способа его пройти.</h1>
-  <p>Самое сложное — сделать первый шаг. Всё остальное — вопрос системы.</p>
+  <h1>Один маршрут — оплата под ваш ритм</h1>
 </section>
 
 <div class="wrap">
-  <div class="toggle-row">
-    <div class="toggle" id="toggle" data-term="3">
-      <div class="thumb"></div>
-      <button id="btn1">1 месяц</button>
-      <button id="btn3" class="active">3 месяца</button>
-    </div>
+  <div class="tab-panel" id="panelMain">
+  <div class="included-block">
+    <h2>Что входит в обучение</h2>
+    <ul class="included-list">
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>Готовый маршрут по шагам</strong><em>а значит — не теряетесь в материалах, всегда знаете, что дальше</em></span>
+      </li>
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>Автоотчёт о прогрессе</strong><em>а значит — видите прогресс в процентах, а не гадаете</em></span>
+      </li>
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>Еженедельные занятия с преподавателем</strong><em>а значит — говорите вслух каждую неделю, а не только читаете</em></span>
+      </li>
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>Преподаватель разбирает каждое задание перед уроком</strong><em>а значит — понимаете, почему были ошибки, а не только что они были</em></span>
+      </li>
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>В конце каждого Шага — говорите и пишете на новую тему</strong><em>а значит — сразу видите, что умеете применять выученное</em></span>
+      </li>
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>Словарь-тренажёр на платформе</strong><em>а значит — слова запоминаются сами, без зубрёжки</em></span>
+      </li>
+    </ul>
   </div>
-  <div class="save-note" id="saveNote">Экономия 30 000 ₸ при оплате за 3 месяца</div>
 
   <div class="cards">
 
-    <!-- ZA -->
-    <div class="card" data-tier="za">
-      <div class="tier-name">ZA</div>
-      <div class="tier-sub">Самостоятельный маршрут с сопровождением на связи</div>
-      <div class="price-block">
-        <div class="price"><span class="amount">25 000 ₸</span><small>/ мес</small></div>
-        <div class="old-price">25 000 ₸/мес</div>
-      </div>
-      <div class="total-line"></div>
-      <div class="savings-badge"></div>
-      <div class="divider"></div>
-      <ul class="features">
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Полный доступ к маршруту: изучение и практика</li>
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Автоматический отчёт о прогрессе</li>
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Прозвон куратором на ключевых этапах</li>
-        <li><span class="icon-badge no"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke-width="1.6" stroke-linecap="round"/></svg></span>Еженедельное занятие с преподавателем</li>
-        <li><span class="icon-badge no"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke-width="1.6" stroke-linecap="round"/></svg></span>Доступность преподавателя 10:00–22:00</li>
-      </ul>
-    </div>
-
     <!-- START -->
-    <div class="card featured" data-tier="start">
-      <div class="badge">Выбирают чаще всего</div>
+    <div class="card" data-tier="start">
       <div class="tier-name">START</div>
-      <div class="tier-sub">Самостоятельный маршрут + регулярная практика с преподавателем</div>
+      <div class="tier-sub">Маршрут с преподавателем — оплата помесячно</div>
       <div class="price-block">
-        <div class="price"><span class="amount">50 000 ₸</span><small>/ мес</small></div>
-        <div class="old-price">50 000 ₸/мес</div>
+        <div class="price"><span class="amount">65 000 ₸</span><small>/ 1 месяц</small></div>
       </div>
-      <div class="total-line"></div>
-      <div class="savings-badge"></div>
-      <div class="divider"></div>
-      <ul class="features">
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Полный доступ к маршруту: изучение и практика</li>
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Автоматический отчёт о прогрессе</li>
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Еженедельные занятия с преподавателем — 4 раза в месяц</li>
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Прозвон куратором на ключевых этапах</li>
-        <li><span class="icon-badge no"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke-width="1.6" stroke-linecap="round"/></svg></span>Доступность преподавателя 10:00–22:00</li>
-      </ul>
+      <div class="total-line">Оплата помесячно</div>
     </div>
 
     <!-- ZA START -->
-    <div class="card" data-tier="zastart">
+    <div class="card featured" data-tier="zastart">
+      <div class="badge">Весь уровень</div>
       <div class="tier-name">ZA · START</div>
-      <div class="tier-sub">Всё из START + методист на связи весь день</div>
+      <div class="tier-sub">Весь уровень целиком — с полным сопровождением преподавателя</div>
       <div class="price-block">
-        <div class="price"><span class="amount">65 000 ₸</span><small>/ мес</small></div>
-        <div class="old-price">65 000 ₸/мес</div>
+        <div class="price"><span class="amount">150 000 ₸</span><small>/ весь уровень</small></div>
       </div>
-      <div class="total-line"></div>
-      <div class="savings-badge"></div>
-      <div class="divider"></div>
-      <ul class="features">
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Полный доступ к маршруту: изучение и практика</li>
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Автоматический отчёт о прогрессе</li>
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Еженедельные занятия с преподавателем — 4 раза в месяц</li>
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Прозвон куратором на ключевых этапах</li>
-        <li><span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Доступность преподавателя ежедневно 10:00–22:00</li>
-      </ul>
+      <div class="total-line">3 месяца · весь уровень</div>
+      <div class="stamp"><span class="stamp-num">77%</span><span class="stamp-label">выбирают</span></div>
     </div>
 
   </div>
-</div>
+  </div>
 
-<div class="wrap compare">
-  <h2>Что входит в каждый тариф</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Что входит</th>
-        <th>ZA</th>
-        <th>START</th>
-        <th>ZA · START</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Полный маршрут: изучение + практика</td>
-        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>Автоматический отчёт о прогрессе</td>
-        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>Прозвон куратором на ключевых этапах</td>
-        <td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>Еженедельные занятия с преподавателем (4 / мес)</td>
-        <td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td>
-      </tr>
-      <tr>
-        <td>Доступность преподавателя 10:00–22:00</td>
-        <td class="no">—</td><td class="no">—</td><td class="yes">✓</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="tab-panel" id="panelZa" style="display:none">
+    <div class="included-block">
+      <h2>Что входит в самостоятельный формат</h2>
+      <ul class="included-list">
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="included-text"><strong>Готовый маршрут по шагам</strong><em>а значит — не теряетесь в материалах, всегда знаете, что дальше</em></span>
+        </li>
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="included-text"><strong>Автоотчёт о прогрессе</strong><em>а значит — видите прогресс в процентах, а не гадаете</em></span>
+        </li>
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="included-text"><strong>Автопроверка заданий</strong><em>а значит — видите ошибку сразу, без преподавателя</em></span>
+        </li>
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="included-text"><strong>Словарь-тренажёр на платформе</strong><em>а значит — слова запоминаются сами, без зубрёжки</em></span>
+        </li>
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="included-text"><strong>Куратор на связи в ключевые моменты</strong><em>а значит — не остаётесь с маршрутом один на один</em></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="cards cards-two">
+      <div class="card" data-tier="za1">
+        <div class="tier-name">ZA</div>
+        <div class="tier-sub">Самостоятельный маршрут — без еженедельных занятий с преподавателем</div>
+        <div class="price-block">
+          <div class="price"><span class="amount">25 000 ₸</span><small>/ 1 месяц</small></div>
+        </div>
+        <div class="total-line">Оплата помесячно</div>
+      </div>
+      <div class="card" data-tier="za3">
+        <div class="tier-name">ZA</div>
+        <div class="tier-sub">Самостоятельный маршрут — без еженедельных занятий с преподавателем</div>
+        <div class="price-block">
+          <div class="price"><span class="amount">60 000 ₸</span><small>/ весь уровень</small></div>
+        </div>
+        <div class="total-line">3 месяца · весь уровень</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="foot-note">Цены указаны в тенге. Скидки доступны при оплате на вводном уроке.</div>
 
+<div class="manager-toggle-row">
+  <button class="manager-toggle" id="tabBack" type="button">Тарифы</button>
+  <button class="manager-toggle" id="tabZa" type="button">Самостоятельно</button>
+</div>
+
 <script>
+  (function(){
+    const tabZa = document.getElementById('tabZa');
+    const tabBack = document.getElementById('tabBack');
+    const panelMain = document.getElementById('panelMain');
+    const panelZa = document.getElementById('panelZa');
 
-  const data = {
-    za:      { m1: 25000, m3total: 60000  },
-    start:   { m1: 50000, m3total: 120000 },
-    zastart: { m1: 65000, m3total: 150000 }
-  };
-
-  const fmt = n => Math.round(n).toLocaleString('ru-RU') + ' ₸';
-
-  const toggle = document.getElementById('toggle');
-  const btn1 = document.getElementById('btn1');
-  const btn3 = document.getElementById('btn3');
-  const saveNote = document.getElementById('saveNote');
-
-  function render(term){
-    toggle.dataset.term = term;
-    btn1.classList.toggle('active', term===1);
-    btn3.classList.toggle('active', term===3);
-
-    document.querySelectorAll('.card').forEach(card=>{
-      const tier = card.dataset.tier;
-      const d = data[tier];
-      const amountEl = card.querySelector('.amount');
-      const oldPriceEl = card.querySelector('.old-price');
-      const totalLineEl = card.querySelector('.total-line');
-      const savingsEl = card.querySelector('.savings-badge');
-
-      if(term === 1){
-        amountEl.textContent = fmt(d.m1);
-        oldPriceEl.classList.remove('show');
-        totalLineEl.textContent = '';
-        savingsEl.classList.remove('show');
-      } else {
-        const perMonth = d.m3total/3;
-        const savings = d.m1*3 - d.m3total;
-        amountEl.textContent = fmt(perMonth);
-        oldPriceEl.textContent = fmt(d.m1) + '/мес';
-        oldPriceEl.classList.add('show');
-        totalLineEl.textContent = fmt(d.m3total) + ' за 3 месяца';
-        savingsEl.textContent = `Экономия ${fmt(savings)}`;
-        savingsEl.classList.add('show');
-      }
-    });
-
-    if(term === 3){
-      saveNote.textContent = 'Цена фиксируется на весь период — экономия указана в каждой карточке';
-      saveNote.classList.add('show');
-    } else {
-      saveNote.classList.remove('show');
+    function showMain(){
+      panelZa.style.display = 'none';
+      panelMain.style.display = '';
     }
-  }
-
-  btn1.addEventListener('click', ()=>render(1));
-  btn3.addEventListener('click', ()=>render(3));
-
-  render(3);
+    function showZa(){
+      panelMain.style.display = 'none';
+      panelZa.style.display = '';
+    }
+    tabZa.addEventListener('click', showZa);
+    tabBack.addEventListener('click', showMain);
+  })();
 </script>
 
 </div>
