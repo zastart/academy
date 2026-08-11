@@ -1595,13 +1595,12 @@ const GOOGLE_SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzXQR
 document.querySelectorAll('.lead-form').forEach((form) => {
   const nameInput = form.querySelector('input[name="name"]');
   const phoneInput = form.querySelector('input[name="phone"]');
-  const submitBtn = form.querySelector('.btn-submit');
 
   phoneInput.addEventListener('input', () => {
     phoneInput.value = formatKzPhone(phoneInput.value);
   });
 
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     nameInput.classList.add('touched');
@@ -1615,32 +1614,28 @@ document.querySelectorAll('.lead-form').forEach((form) => {
     const isConfigured = !GOOGLE_SHEETS_WEB_APP_URL.includes('PASTE_YOUR');
 
     if (isConfigured) {
-      submitBtn.disabled = true;
-
-      try {
-        // Apps Script web apps don't return CORS headers, so the response
-        // is opaque (mode: 'no-cors') — we can't read it, but the request
-        // still reaches the script and gets written to the sheet.
-        await fetch(GOOGLE_SHEETS_WEB_APP_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({
-            name: nameInput.value.trim(),
-            // Plain digits, no "+" — a leading "+" makes Google Sheets read
-            // the cell as a formula and show #ERROR!.
-            phone: phoneInput.value.replace(/\D/g, ''),
-            source: form.dataset.source || '',
-            page: window.location.href,
-          }),
-        });
-      } catch (err) {
-        // Network failure — the lead is lost, but we still let the user
-        // see a success state rather than a dead end. Logged for debugging.
+      // Apps Script web apps don't return CORS headers, so the response is
+      // opaque (mode: 'no-cors') and we never read it — and Apps Script
+      // round trips can take several seconds. Fire-and-forget instead of
+      // awaiting, so the success state shows immediately rather than
+      // leaving the user staring at a seemingly-frozen button.
+      fetch(GOOGLE_SHEETS_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          name: nameInput.value.trim(),
+          // Plain digits, no "+" — a leading "+" makes Google Sheets read
+          // the cell as a formula and show #ERROR!.
+          phone: phoneInput.value.replace(/\D/g, ''),
+          source: form.dataset.source || '',
+          page: window.location.href,
+        }),
+      }).catch((err) => {
+        // Network failure — the lead is lost, but the user already sees a
+        // success state rather than a dead end. Logged for debugging.
         console.error('Lead submit failed:', err);
-      }
-
-      submitBtn.disabled = false;
+      });
     } else {
       console.warn('GOOGLE_SHEETS_WEB_APP_URL is not configured yet — form is not sending data anywhere.');
     }
