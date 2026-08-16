@@ -1543,6 +1543,7 @@ document.querySelectorAll('.lead-form').forEach((form) => {
 
     if (!isNameValid || !isPhoneValid) return;
 
+    const utm = getUtmParams();
     const isConfigured = !GOOGLE_SHEETS_WEB_APP_URL.includes('PASTE_YOUR');
 
     if (isConfigured) {
@@ -1564,6 +1565,9 @@ document.querySelectorAll('.lead-form').forEach((form) => {
           // the cell as a formula and show #ERROR!.
           phone: phoneInput.value.replace(/\D/g, ''),
           source: form.dataset.source || '',
+          utm_campaign: utm.utm_campaign,
+          utm_adset: utm.utm_adset,
+          utm_term: utm.utm_term,
           page: window.location.href,
         }),
       }).catch((err) => {
@@ -1575,7 +1579,6 @@ document.querySelectorAll('.lead-form').forEach((form) => {
     }
 
     if (typeof emailjs !== 'undefined') {
-      const utm = getUtmParams();
       emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
         date: new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Almaty' }),
         name: nameInput.value.trim(),
