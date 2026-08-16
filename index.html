@@ -1526,33 +1526,29 @@ document.querySelectorAll('.lead-form').forEach((form) => {
 
     if (isConfigured) {
       // Apps Script web apps don't return CORS headers, so the response is
-      // opaque (mode: 'no-cors') — we never read it, and a server-side
-      // execution failure in the script still resolves the fetch as if it
-      // succeeded (only a full network outage would reject it). So we can't
-      // detect failures to retry on. Instead, send it twice, a couple
-      // seconds apart, unconditionally — a stray duplicate row in the sheet
-      // is a much smaller problem than a silently lost lead.
-      const sendLead = () => {
-        fetch(GOOGLE_SHEETS_WEB_APP_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({
-            name: nameInput.value.trim(),
-            // Plain digits, no "+" — a leading "+" makes Google Sheets read
-            // the cell as a formula and show #ERROR!.
-            phone: phoneInput.value.replace(/\D/g, ''),
-            source: form.dataset.source || '',
-            page: window.location.href,
-          }),
-        }).catch((err) => {
-          // Only a full network outage lands here — logged for debugging.
-          console.error('Lead submit failed:', err);
-        });
-      };
-
-      sendLead();
-      setTimeout(sendLead, 2500);
+      // opaque (mode: 'no-cors') and we never read it — and Apps Script
+      // round trips can take several seconds. Fire-and-forget instead of
+      // awaiting, so the success state shows immediately rather than
+      // leaving the user staring at a seemingly-frozen button.
+      // Sent once — rows in this sheet feed AmoCRM downstream, so sending
+      // twice as a naive safety net would create duplicate CRM leads.
+      // The backup channel for lost submissions lives elsewhere (email).
+      fetch(GOOGLE_SHEETS_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({
+          name: nameInput.value.trim(),
+          // Plain digits, no "+" — a leading "+" makes Google Sheets read
+          // the cell as a formula and show #ERROR!.
+          phone: phoneInput.value.replace(/\D/g, ''),
+          source: form.dataset.source || '',
+          page: window.location.href,
+        }),
+      }).catch((err) => {
+        // Network failure — logged for debugging.
+        console.error('Lead submit failed:', err);
+      });
     } else {
       console.warn('GOOGLE_SHEETS_WEB_APP_URL is not configured yet — form is not sending data anywhere.');
     }
