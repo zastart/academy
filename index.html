@@ -1454,6 +1454,7 @@ src="https://www.facebook.com/tr?id=1737272540709380&ev=PageView&noscript=1"
   </div>
 </footer>
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 // Mobile nav toggle
 const burger = document.getElementById('burger');
@@ -1503,6 +1504,26 @@ function formatKzPhone(raw) {
 // Lead forms: validate, then send to Google Sheets via Apps Script Web App
 const GOOGLE_SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzXQRAayjud9FRGTYZmyAKfnFxDxJxZdwHKH1RugWfvUQcg-UK9Az1J_Dbk0XR6b0SGpw/exec';
 
+// Backup channel (email) so a Sheets/Apps Script failure doesn't lose the
+// lead — independent of the Sheets → AmoCRM pipeline, so it never creates
+// a duplicate CRM lead.
+const EMAILJS_PUBLIC_KEY = 'cQWgkpH5RlwKVfl_g';
+const EMAILJS_SERVICE_ID = 'service_k5eyz56';
+const EMAILJS_TEMPLATE_ID = 'template_lkocje3';
+
+if (typeof emailjs !== 'undefined') {
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+}
+
+function getUtmParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    utm_campaign: params.get('utm_campaign') || '',
+    utm_adset: params.get('utm_adset') || '',
+    utm_term: params.get('utm_term') || '',
+  };
+}
+
 document.querySelectorAll('.lead-form').forEach((form) => {
   const nameInput = form.querySelector('input[name="name"]');
   const phoneInput = form.querySelector('input[name="phone"]');
@@ -1551,6 +1572,22 @@ document.querySelectorAll('.lead-form').forEach((form) => {
       });
     } else {
       console.warn('GOOGLE_SHEETS_WEB_APP_URL is not configured yet — form is not sending data anywhere.');
+    }
+
+    if (typeof emailjs !== 'undefined') {
+      const utm = getUtmParams();
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        date: new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Almaty' }),
+        name: nameInput.value.trim(),
+        phone: phoneInput.value,
+        source: form.dataset.source || '',
+        utm_campaign: utm.utm_campaign,
+        utm_adset: utm.utm_adset,
+        utm_term: utm.utm_term,
+        page: window.location.href,
+      }).catch((err) => {
+        console.error('Backup email failed:', err);
+      });
     }
 
     if (typeof fbq === 'function') {
