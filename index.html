@@ -1587,6 +1587,13 @@ document.querySelectorAll('.review-video').forEach((wrap) => {
     wrap.classList.add('is-playing');
   });
 
+  // The play button overlay hides itself once playing (so it doesn't sit
+  // on top of the video), which means the video itself needs to handle
+  // pausing — otherwise there's no way to stop playback once started.
+  video.addEventListener('click', () => {
+    if (!video.paused) video.pause();
+  });
+
   video.addEventListener('pause', () => wrap.classList.remove('is-playing'));
   video.addEventListener('ended', () => wrap.classList.remove('is-playing'));
 });
