@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тарифы — ZA START</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --graphite:#1D2733;
+    --graphite-soft:#2B3644;
+    --ivory:#F7F3EC;
+    --ivory-dim:#EFEAE0;
+    --burgundy:#7B2940;
+    --burgundy-soft:#9C3E56;
+    --line:#DAD3C6;
+    --muted:#6B7482;
+    --muted-on-dark:#9BA3AE;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ivory);
+    color:var(--graphite);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Golos Text',sans-serif;
+    letter-spacing:-0.01em;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:96px 0 56px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-size:13px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--burgundy);
+    font-weight:600;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(28px,4.5vw,42px);
+    font-weight:700;
+    line-height:1.2;
+    margin:0;
+    color:var(--graphite);
+  }
+
+  /* ---------- MANAGER TOGGLE (discreet, bottom of page) ---------- */
+  .manager-toggle-row{
+    text-align:center;
+    padding:24px 0 60px;
+  }
+  .manager-toggle{
+    border:none;
+    background:none;
+    color:var(--line);
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    font-weight:400;
+    letter-spacing:0.02em;
+    cursor:pointer;
+    padding:6px 10px;
+    opacity:0.55;
+    transition:opacity .2s ease;
+  }
+  .manager-toggle:hover{opacity:1;}
+  .cards-two{
+    grid-template-columns:repeat(2,1fr);
+    max-width:600px;
+  }
+
+  /* ---------- INCLUDED BLOCK ---------- */
+  .included-block{
+    padding:56px 0 8px;
+    text-align:center;
+  }
+  .included-block h2{
+    font-size:22px;
+    font-weight:700;
+    color:var(--graphite);
+    margin:0 0 32px;
+  }
+  .included-list{
+    list-style:none;
+    margin:0 auto;
+    padding:0;
+    max-width:640px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+    text-align:left;
+  }
+  .included-list li{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+  }
+  .included-list .icon-badge{margin-top:1px;}
+  .included-text{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .included-text strong{
+    font-size:18px;
+    font-weight:600;
+    color:var(--graphite);
+    line-height:1.35;
+  }
+  .included-text em{
+    font-style:normal;
+    font-size:15.5px;
+    color:var(--muted);
+    line-height:1.4;
+  }
+
+  /* ---------- CARDS ---------- */
+  .cards{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:24px;
+    max-width:460px;
+    margin:0 auto;
+    padding:64px 0 80px;
+  }
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:36px 30px;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .card.featured{
+    background:var(--graphite);
+    color:var(--ivory);
+    border-color:var(--graphite);
+    transform:scale(1.035);
+  }
+  .card:hover{transform:translateY(-4px);}
+  .card.featured:hover{transform:scale(1.035) translateY(-4px);}
+  .badge{
+    position:absolute;
+    top:-13px; left:30px;
+    background:var(--burgundy);
+    color:#fff;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    padding:6px 14px;
+    border-radius:999px;
+  }
+  .tier-name{
+    font-size:24px;
+    font-weight:700;
+    margin:6px 0 4px;
+  }
+  .tier-sub{
+    font-size:14px;
+    color:var(--muted);
+    margin-bottom:28px;
+    line-height:1.4;
+  }
+  .card.featured .tier-sub{color:var(--muted-on-dark);}
+  .price-block{margin-bottom:6px;}
+  .price{
+    font-family:'Golos Text',sans-serif;
+    font-size:44px;
+    font-weight:700;
+    line-height:1;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .price small{
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    font-weight:500;
+    color:var(--muted);
+  }
+  .card.featured .price small{color:var(--muted-on-dark);}
+  .savings-line{
+    font-family:'Golos Text',sans-serif;
+    font-size:17px;
+    font-weight:700;
+    color:var(--ivory);
+    margin-top:8px;
+  }
+  .total-line{
+    font-size:13.5px;
+    font-weight:500;
+    color:var(--muted);
+    margin:4px 0 24px;
+  }
+  .card.featured .total-line{color:var(--muted-on-dark);}
+  .divider{
+    height:1px;
+    background:var(--line);
+    margin:8px 0 22px;
+  }
+  .card.featured .divider{background:rgba(247,243,236,0.15);}
+  .features{
+    list-style:none;
+    margin:0;
+    padding:0;
+    flex-grow:1;
+  }
+  .features li{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:14.5px;
+    line-height:1.5;
+    margin-bottom:14px;
+    color:var(--graphite);
+  }
+  .features li:last-child{margin-bottom:0;}
+  .card.featured .features li{color:var(--ivory);}
+  .features li svg{flex-shrink:0; margin-top:2px;}
+  .icon-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    flex-shrink:0;
+    margin-top:0;
+  }
+  .icon-badge svg{margin-top:0;}
+  .icon-badge.yes{background:rgba(123,41,64,0.10);}
+  .icon-badge.yes svg path{stroke:#7B2940;}
+  .icon-badge.no{background:rgba(107,116,130,0.12);}
+  .icon-badge.no svg path{stroke:#6B7482;}
+  .card.featured .icon-badge.yes{background:rgba(247,243,236,0.16);}
+  .card.featured .icon-badge.yes svg path{stroke:#F3D2DA;}
+  .card.featured .icon-badge.no{background:rgba(247,243,236,0.10);}
+  .card.featured .icon-badge.no svg path{stroke:#C9CFD6;}
+
+  /* ---------- TARIFFS (12 / 6 / 3 months) ---------- */
+  .cards-three{
+    --price-main:52px;
+    --price-sec:38px;
+    max-width:460px;
+  }
+  .cards-three .card{padding:32px 18px;}
+  .cards-three .card:not(.card-main){background:var(--ivory);color:var(--graphite);}
+  .cards-three .card-main{
+    background:var(--burgundy);
+    color:var(--ivory);
+    border-color:var(--burgundy);
+    box-shadow:0 22px 48px rgba(123,41,64,0.28);
+  }
+  .card-main .badge{
+    background:var(--ivory);
+    color:var(--burgundy);
+    box-shadow:0 4px 12px rgba(0,0,0,0.18);
+  }
+
+  /* name (term), plain-language lead (2 lines on every card), meetings */
+  .cards-three .tier-name{font-size:24px;line-height:1.2;margin:6px 0 6px;}
+  .tier-lead{font-size:17px;line-height:1.35;color:rgba(29,39,51,0.85);margin:0 0 8px;}
+  .card-main .tier-lead{color:rgba(247,243,236,0.95);}
+  .tier-meets{font-size:15px;line-height:1.4;color:var(--muted);margin:0 0 16px;}
+  .card-main .tier-meets{color:rgba(247,243,236,0.75);}
+
+  /* price: the full price is the big number; main is the largest text on the page,
+     the others are ~28% smaller, weight 600, softer colour */
+  .cards-three .price-block{
+    display:flex;
+    align-items:flex-end;
+    height:var(--price-main);
+    margin:0 0 8px;
+  }
+  .cards-three .price{
+    font-size:var(--price-sec);
+    font-weight:600;
+    line-height:1;
+    flex-wrap:nowrap;
+  }
+  .cards-three .price .amount{color:rgba(29,39,51,0.8);}
+  /* lift the smaller prices so their baseline sits on the main price's baseline */
+  .cards-three .card:not(.card-main) .price{margin-bottom:calc((var(--price-main) - var(--price-sec)) * 0.109);}
+  .cards-three .card-main .price{font-size:var(--price-main);font-weight:700;}
+  .cards-three .card-main .price .amount{color:#fff;}
+
+  /* monthly price: quiet grey line on neutral cards, light pill on the main one */
+  .price-sub{font-size:16px;line-height:1.4;color:var(--muted);margin:0;}
+  .price-pill{
+    display:block;
+    margin-top:8px;
+    padding:11px 16px;
+    border-radius:12px;
+    background:var(--ivory);
+    color:var(--burgundy);
+    font-size:17px;
+    font-weight:700;
+    line-height:1.3;
+    text-align:center;
+    box-shadow:0 6px 16px rgba(0,0,0,0.18);
+  }
+
+  /* checklist (main card only) */
+  .cards-three .features{margin:20px 0 0;}
+  .cards-three .features li{font-size:15px;line-height:1.4;margin-bottom:12px;color:var(--ivory);}
+  .cards-three .features li:last-child{margin-bottom:0;}
+  .card-main .icon-badge.yes{background:rgba(247,243,236,0.16);}
+  .card-main .icon-badge.yes svg path{stroke:#F3D2DA;}
+
+  /* desktop: three equal-height cards in a row, wider than the page column so the lines fit;
+     the main card sticks out 20px at the top (its content is shifted down by the same 20px,
+     so name / lead / price stay on the same horizontals) */
+  @media(min-width:1340px){
+    .cards-three{--price-main:60px;--price-sec:43px;}
+    .cards.cards-three{
+      --w:1280px;
+      width:var(--w);
+      max-width:none;
+      margin-left:calc((100% - var(--w)) / 2);
+      margin-right:calc((100% - var(--w)) / 2);
+      grid-template-columns:1.2fr 1fr 1fr;
+      align-items:stretch;
+    }
+    .cards-three .card{padding:32px;}
+    .cards-three .card-main{margin-top:-20px;padding-top:52px;}
+  }
+  @media(max-width:600px){
+    .wrap{padding:0 16px;}
+    .price-pill{font-size:15px;padding:11px 10px;}
+  }
+
+  /* ---------- FOOT ---------- */
+  .foot-note{
+    text-align:center;
+    padding:0 0 90px;
+    font-size:14px;
+    color:var(--muted);
+  }
+
+  @media(max-width:880px){
+    .cards{grid-template-columns:1fr;}
+    .card.featured{transform:none;}
+    .card.featured:hover{transform:translateY(-4px);}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+
+  /* ---------- PASSWORD GATE ---------- */
+  #gate{
+    position:fixed;
+    inset:0;
+    background:var(--graphite);
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  #gate.hidden{display:none;}
+  .gate-box{
+    max-width:360px;
+    width:100%;
+    text-align:center;
+  }
+  .gate-box .eyebrow{color:var(--ivory); opacity:0.6;}
+  .gate-box h2{
+    color:var(--ivory);
+    font-size:24px;
+    font-weight:700;
+    margin:14px 0 28px;
+  }
+  .gate-box p{
+    color:var(--muted-on-dark);
+    font-size:14.5px;
+    margin:0 0 28px;
+  }
+  .gate-box input{
+    width:100%;
+    padding:14px 18px;
+    border-radius:12px;
+    border:1px solid rgba(247,243,236,0.2);
+    background:rgba(247,243,236,0.06);
+    color:var(--ivory);
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    text-align:center;
+    outline:none;
+    margin-bottom:14px;
+    transition:border-color .2s ease;
+  }
+  .gate-box input:focus{border-color:var(--burgundy-soft);}
+  .gate-box input::placeholder{color:var(--muted-on-dark);}
+  .gate-box button{
+    width:100%;
+    padding:14px 18px;
+    border:none;
+    border-radius:12px;
+    background:var(--burgundy);
+    color:#fff;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    transition:background .2s ease;
+  }
+  .gate-box button:hover{background:var(--burgundy-soft);}
+  .gate-error{
+    color:#E39BAA;
+    font-size:13px;
+    margin-top:12px;
+    height:16px;
+    opacity:0;
+    transition:opacity .2s ease;
+  }
+  .gate-error.show{opacity:1;}
+  #site-content{display:none;}
+  #site-content.unlocked{display:block;}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-box">
+    <div class="eyebrow">ZA   START</div>
+    <h2>Введите промокод</h2>
+    <form id="gateForm" autocomplete="off">
+      <input type="password" id="gateInput" placeholder="Промокод" autofocus>
+      <button type="submit">Показать цены</button>
+      <div class="gate-error" id="gateError">Промокод не найден</div>
+    </form>
+  </div>
+</div>
+
+<div id="site-content">
+
+<section class="hero wrap">
+  <div class="eyebrow">Изучение → Практика → Прогресс</div>
+  <h1>Выберите удобный тариф</h1>
+</section>
+
+<div class="wrap">
+  <div class="tab-panel" id="panelMain">
+  <div class="included-block">
+    <h2>Что входит в обучение</h2>
+    <ul class="included-list">
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>Готовый маршрут по шагам</strong><em>а значит — не теряетесь в материалах, всегда знаете, что дальше</em></span>
+      </li>
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>Автоотчёт о прогрессе</strong><em>а значит — видите, какие навыки уже освоили, а не гадаете</em></span>
+      </li>
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>Еженедельные занятия с преподавателем</strong><em>а значит — говорите вслух каждую неделю, а не только читаете</em></span>
+      </li>
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>Преподаватель разбирает каждое задание перед уроком</strong><em>а значит — понимаете, почему были ошибки, а не только что они были</em></span>
+      </li>
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>В конце каждого Шага — говорите и пишете на новую тему</strong><em>а значит — сразу видите, что умеете применять выученное</em></span>
+      </li>
+      <li>
+        <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="included-text"><strong>Словарь-тренажёр на платформе</strong><em>а значит — слова запоминаются сами, без зубрёжки</em></span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="cards cards-three">
+
+    <!-- 12 месяцев · 4 уровня (главный) -->
+    <div class="card card-main" data-tier="months12">
+      <div class="badge">Рекомендуем</div>
+      <div class="tier-name">12 месяцев</div>
+      <div class="tier-lead">4 уровня —<br>с нуля до уверенного разговора</div>
+      <div class="tier-meets">52 встречи с преподавателем</div>
+      <div class="price-block">
+        <div class="price"><span class="amount">448&nbsp;800&nbsp;₸</span></div>
+      </div>
+      <div class="price-pill">37&nbsp;400&nbsp;₸ / мес · можно в рассрочку</div>
+      <ul class="features">
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>Заговорите на английском — с гарантией</span>
+        </li>
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>Приоритет в выборе времени и преподавателя</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 6 месяцев · 2 уровня -->
+    <div class="card" data-tier="months6">
+      <div class="tier-name">6 месяцев</div>
+      <div class="tier-lead">2 уровня —<br>с нуля до простых фраз о себе</div>
+      <div class="tier-meets">26 встреч с преподавателем</div>
+      <div class="price-block">
+        <div class="price"><span class="amount">330&nbsp;000&nbsp;₸</span></div>
+      </div>
+      <div class="price-sub">55&nbsp;000&nbsp;₸ / мес</div>
+    </div>
+
+    <!-- 3 месяца · 1 уровень -->
+    <div class="card" data-tier="months3">
+      <div class="tier-name">3 месяца</div>
+      <div class="tier-lead">1 уровень —<br>первые шаги в языке</div>
+      <div class="tier-meets">13 встреч с преподавателем</div>
+      <div class="price-block">
+        <div class="price"><span class="amount">180&nbsp;000&nbsp;₸</span></div>
+      </div>
+      <div class="price-sub">60&nbsp;000&nbsp;₸ / мес</div>
+    </div>
+
+  </div>
+  </div>
+
+  <div class="tab-panel" id="panelZa" style="display:none">
+    <div class="included-block">
+      <h2>Что входит в самостоятельный формат</h2>
+      <ul class="included-list">
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="included-text"><strong>Готовый маршрут по шагам</strong><em>а значит — не теряетесь в материалах, всегда знаете, что дальше</em></span>
+        </li>
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="included-text"><strong>Автоотчёт о прогрессе</strong><em>а значит — видите, какие навыки уже освоили, а не гадаете</em></span>
+        </li>
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="included-text"><strong>Автопроверка заданий</strong><em>а значит — видите ошибку сразу, без преподавателя</em></span>
+        </li>
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="included-text"><strong>Словарь-тренажёр на платформе</strong><em>а значит — слова запоминаются сами, без зубрёжки</em></span>
+        </li>
+        <li>
+          <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="included-text"><strong>Куратор на связи в ключевые моменты</strong><em>а значит — не остаётесь с маршрутом один на один</em></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="cards cards-two">
+      <div class="card" data-tier="za1">
+        <div class="tier-name">ZA</div>
+        <div class="tier-sub">Самостоятельный маршрут — без еженедельных занятий с преподавателем</div>
+        <div class="price-block">
+          <div class="price"><span class="amount">25 000 ₸</span><small>/ 1 месяц</small></div>
+        </div>
+        <div class="total-line">Оплата помесячно</div>
+      </div>
+      <div class="card" data-tier="za3">
+        <div class="tier-name">ZA</div>
+        <div class="tier-sub">Самостоятельный маршрут — без еженедельных занятий с преподавателем</div>
+        <div class="price-block">
+          <div class="price"><span class="amount">60 000 ₸</span><small>/ весь уровень</small></div>
+        </div>
+        <div class="total-line">3 месяца · весь уровень</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="foot-note">Цены указаны в тенге. Рассрочка на 12 месяцев доступна при оплате на вводном уроке.</div>
+
+<div class="manager-toggle-row">
+  <button class="manager-toggle" id="tabBack" type="button">Тарифы</button>
+  <button class="manager-toggle" id="tabZa" type="button">Самостоятельно</button>
+</div>
+
+<script>
+  (function(){
+    const tabZa = document.getElementById('tabZa');
+    const tabBack = document.getElementById('tabBack');
+    const panelMain = document.getElementById('panelMain');
+    const panelZa = document.getElementById('panelZa');
+
+    function showMain(){
+      panelZa.style.display = 'none';
+      panelMain.style.display = '';
+    }
+    function showZa(){
+      panelMain.style.display = 'none';
+      panelZa.style.display = '';
+    }
+    tabZa.addEventListener('click', showZa);
+    tabBack.addEventListener('click', showMain);
+  })();
+</script>
+
+</div>
+
+<script>
+  (function(){
+    const PASSWORD = 'ZASTART';
+    const gate = document.getElementById('gate');
+    const content = document.getElementById('site-content');
+    const form = document.getElementById('gateForm');
+    const input = document.getElementById('gateInput');
+    const error = document.getElementById('gateError');
+
+    function unlock(){
+      gate.classList.add('hidden');
+      content.classList.add('unlocked');
+      try{ sessionStorage.setItem('za_start_unlocked', '1'); }catch(e){}
+    }
+
+    try{
+      if(sessionStorage.getItem('za_start_unlocked') === '1'){ unlock(); }
+    }catch(e){}
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(input.value.trim().toUpperCase() === PASSWORD){
+        unlock();
+      } else {
+        error.classList.add('show');
+        input.value = '';
+        input.focus();
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
