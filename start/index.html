@@ -270,12 +270,8 @@
     box-shadow:0 4px 12px rgba(0,0,0,0.18);
   }
 
-  /* name (term), plain-language lead (2 lines on every card), meetings */
-  .cards-three .tier-name{font-size:24px;line-height:1.2;margin:6px 0 6px;}
-  .tier-lead{font-size:17px;line-height:1.35;color:rgba(29,39,51,0.85);margin:0 0 8px;}
-  .card-main .tier-lead{color:rgba(247,243,236,0.95);}
-  .tier-meets{font-size:15px;line-height:1.4;color:var(--muted);margin:0 0 16px;}
-  .card-main .tier-meets{color:rgba(247,243,236,0.75);}
+  /* name (term) */
+  .cards-three .tier-name{font-size:24px;line-height:1.2;margin:6px 0 14px;}
 
   /* price: the full price is the big number; main is the largest text on the page,
      the others are ~28% smaller, weight 600, softer colour */
@@ -297,6 +293,20 @@
   .cards-three .card-main .price{font-size:var(--price-main);font-weight:700;}
   .cards-three .card-main .price .amount{color:#fff;}
 
+  /* full price, struck through, above the big price. Fixed height on every card (empty on the
+     3-month card) so the big prices stay on one horizontal. Small and muted on purpose. */
+  .price-old{
+    height:22px;
+    margin:0 0 2px;
+    font-size:15px;
+    line-height:22px;
+    font-weight:500;
+    color:var(--muted);
+    text-decoration:line-through;
+    text-decoration-thickness:1px;
+  }
+  .card-main .price-old{color:rgba(247,243,236,0.6);}
+
   /* monthly price: quiet grey line on neutral cards, light pill on the main one */
   .price-sub{font-size:16px;line-height:1.4;color:var(--muted);margin:0;}
   .price-pill{
@@ -311,6 +321,44 @@
     line-height:1.3;
     text-align:center;
     box-shadow:0 6px 16px rgba(0,0,0,0.18);
+  }
+
+  /* saving at the intro lesson: prominent on the main card, modest outlined note on the 6-month card */
+  .benefit-pill{
+    display:block;
+    margin-top:10px;
+    padding:12px 16px;
+    border-radius:12px;
+    background:var(--ivory);
+    color:var(--burgundy);
+    text-align:center;
+    box-shadow:0 6px 16px rgba(0,0,0,0.18);
+  }
+  .benefit-pill strong{
+    display:block;
+    font-family:'Golos Text',sans-serif;
+    font-size:20px;
+    font-weight:800;
+    line-height:1.25;
+  }
+  .benefit-pill span{
+    display:block;
+    margin-top:2px;
+    font-size:13px;
+    font-weight:500;
+    line-height:1.4;
+  }
+  .benefit-note{
+    display:block;
+    margin-top:14px;
+    padding:9px 10px;
+    border:1px solid rgba(29,39,51,0.22);
+    border-radius:10px;
+    font-size:14px;
+    font-weight:400;
+    line-height:1.4;
+    text-align:center;
+    color:rgba(29,39,51,0.8);
   }
 
   /* checklist (main card only) */
@@ -337,6 +385,10 @@
     .cards-three .card{padding:32px;}
     .cards-three .card-main{margin-top:-20px;padding-top:52px;}
   }
+  /* stacked layout: the empty spacer above the 3-month price is only needed when cards sit in a row */
+  @media(max-width:1339px){
+    .price-old:empty{display:none;}
+  }
   @media(max-width:600px){
     .wrap{padding:0 16px;}
     .price-pill{font-size:15px;padding:11px 10px;}
@@ -344,9 +396,12 @@
 
   /* ---------- FOOT ---------- */
   .foot-note{
+    max-width:760px;
+    margin:0 auto;
     text-align:center;
-    padding:0 0 90px;
+    padding:0 16px 90px;
     font-size:14px;
+    line-height:1.5;
     color:var(--muted);
   }
 
@@ -486,16 +541,16 @@
 
   <div class="cards cards-three">
 
-    <!-- 12 месяцев · 4 уровня (главный) -->
+    <!-- 12 месяцев (главный) -->
     <div class="card card-main" data-tier="months12">
       <div class="badge">Рекомендуем</div>
       <div class="tier-name">12 месяцев</div>
-      <div class="tier-lead">4 уровня —<br>с нуля до уверенного разговора</div>
-      <div class="tier-meets">52 встречи с преподавателем</div>
+      <div class="price-old">720&nbsp;000&nbsp;₸</div>
       <div class="price-block">
         <div class="price"><span class="amount">448&nbsp;800&nbsp;₸</span></div>
       </div>
       <div class="price-pill">37&nbsp;400&nbsp;₸ / мес · можно в рассрочку</div>
+      <div class="benefit-pill"><strong>Выгода 271&nbsp;200&nbsp;₸</strong><span>при оплате на вводном уроке</span></div>
       <ul class="features">
         <li>
           <span class="icon-badge yes"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -508,22 +563,21 @@
       </ul>
     </div>
 
-    <!-- 6 месяцев · 2 уровня -->
+    <!-- 6 месяцев -->
     <div class="card" data-tier="months6">
       <div class="tier-name">6 месяцев</div>
-      <div class="tier-lead">2 уровня —<br>с нуля до простых фраз о себе</div>
-      <div class="tier-meets">26 встреч с преподавателем</div>
+      <div class="price-old">360&nbsp;000&nbsp;₸</div>
       <div class="price-block">
         <div class="price"><span class="amount">330&nbsp;000&nbsp;₸</span></div>
       </div>
       <div class="price-sub">55&nbsp;000&nbsp;₸ / мес</div>
+      <div class="benefit-note">Выгода 30&nbsp;000&nbsp;₸<br>при оплате на вводном уроке</div>
     </div>
 
-    <!-- 3 месяца · 1 уровень -->
+    <!-- 3 месяца -->
     <div class="card" data-tier="months3">
       <div class="tier-name">3 месяца</div>
-      <div class="tier-lead">1 уровень —<br>первые шаги в языке</div>
-      <div class="tier-meets">13 встреч с преподавателем</div>
+      <div class="price-old" aria-hidden="true"></div>
       <div class="price-block">
         <div class="price"><span class="amount">180&nbsp;000&nbsp;₸</span></div>
       </div>
@@ -581,7 +635,7 @@
   </div>
 </div>
 
-<div class="foot-note">Цены указаны в тенге. Рассрочка на 12 месяцев доступна при оплате на вводном уроке.</div>
+<div class="foot-note">Цены указаны в тенге. Цены со скидкой действуют при оплате в день вводного урока, после — полная стоимость: 360&nbsp;000&nbsp;₸ за 6 месяцев, 720&nbsp;000&nbsp;₸ за 12 месяцев. Рассрочка доступна при любом способе оплаты.</div>
 
 <div class="manager-toggle-row">
   <button class="manager-toggle" id="tabBack" type="button">Тарифы</button>
