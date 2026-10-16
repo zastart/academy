@@ -257,7 +257,12 @@
     max-width:460px;
   }
   .cards-three .card{padding:32px 18px;}
-  .cards-three .card:not(.card-main){background:var(--ivory);color:var(--graphite);}
+  .cards-three .card:not(.card-main){
+    background:#FFFFFF;
+    color:var(--graphite);
+    border:1px solid transparent; /* no visible border; keeps the 1px so prices stay on one baseline */
+    box-shadow:0 8px 24px rgba(29,39,51,0.06), 0 2px 6px rgba(29,39,51,0.04);
+  }
   .cards-three .card-main{
     background:var(--burgundy);
     color:var(--ivory);
@@ -287,7 +292,7 @@
     line-height:1;
     flex-wrap:nowrap;
   }
-  .cards-three .price .amount{color:rgba(29,39,51,0.8);}
+  .cards-three .price .amount{color:#1D2733;}
   /* lift the smaller prices so their baseline sits on the main price's baseline */
   .cards-three .card:not(.card-main) .price{margin-bottom:calc((var(--price-main) - var(--price-sec)) * 0.109);}
   .cards-three .card-main .price{font-size:var(--price-main);font-weight:700;}
@@ -301,14 +306,14 @@
     font-size:15px;
     line-height:22px;
     font-weight:500;
-    color:var(--muted);
+    color:#9CA3AF;
     text-decoration:line-through;
     text-decoration-thickness:1px;
   }
   .card-main .price-old{color:rgba(247,243,236,0.6);}
 
   /* monthly price: quiet grey line on neutral cards, light pill on the main one */
-  .price-sub{font-size:16px;line-height:1.4;color:var(--muted);margin:0;}
+  .price-sub{font-size:16px;line-height:1.4;color:#6B7280;margin:0;}
   .price-pill{
     display:block;
     margin-top:8px;
@@ -319,7 +324,7 @@
     font-size:17px;
     font-weight:700;
     line-height:1.3;
-    text-align:center;
+    text-align:left;
     box-shadow:0 6px 16px rgba(0,0,0,0.18);
   }
 
@@ -331,14 +336,14 @@
     border-radius:12px;
     background:var(--ivory);
     color:var(--burgundy);
-    text-align:center;
+    text-align:left;
     box-shadow:0 6px 16px rgba(0,0,0,0.18);
   }
   .benefit-pill strong{
     display:block;
     font-family:'Golos Text',sans-serif;
     font-size:20px;
-    font-weight:800;
+    font-weight:700;
     line-height:1.25;
   }
   .benefit-pill span{
@@ -351,14 +356,26 @@
   .benefit-note{
     display:block;
     margin-top:14px;
-    padding:9px 10px;
-    border:1px solid rgba(29,39,51,0.22);
+    padding:11px 12px;
+    background:var(--ivory);
+    border:0;
     border-radius:10px;
+    text-align:left;
+  }
+  .benefit-note strong{
+    display:block;
+    font-size:16px;
+    font-weight:600;
+    line-height:1.3;
+    color:var(--graphite);
+  }
+  .benefit-note span{
+    display:block;
+    margin-top:2px;
     font-size:14px;
     font-weight:400;
     line-height:1.4;
-    text-align:center;
-    color:rgba(29,39,51,0.8);
+    color:#6B7280;
   }
 
   /* checklist (main card only) */
@@ -571,7 +588,7 @@
         <div class="price"><span class="amount">330&nbsp;000&nbsp;₸</span></div>
       </div>
       <div class="price-sub">55&nbsp;000&nbsp;₸ / мес</div>
-      <div class="benefit-note">Выгода 30&nbsp;000&nbsp;₸<br>при оплате на вводном уроке</div>
+      <div class="benefit-note"><strong>Выгода 30&nbsp;000&nbsp;₸</strong><span>при оплате на вводном уроке</span></div>
     </div>
 
     <!-- 3 месяца -->
