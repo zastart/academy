@@ -685,7 +685,6 @@ function renderQuestion(it){
           '<span>Нажмите, чтобы воспроизвести · можно переслушать</span></div>'+
         '<button class="audio-replay" id="replayBtn" type="button" title="Переслушать" aria-label="Переслушать">↻</button>'+
       '</div>'+
-      '<button class="script-toggle" id="scriptBtn">Нет звука? Показать текст</button>'+
       '<div id="scriptBox" hidden class="passage"><div class="ttl">Текст записи</div>'+esc(it.script)+'</div>';
   }
   var letters=['A','B','C','D'];
@@ -710,9 +709,6 @@ function renderQuestion(it){
   '</div>';
 
   if(it.audio){
-    var sb=document.getElementById('scriptBtn');
-    sb.onclick=function(){var box=document.getElementById('scriptBox');box.hidden=!box.hidden;
-      sb.textContent=box.hidden?'Нет звука? Показать текст':'Скрыть текст';};
     setupAudio(it);
   }
   var nextBtn=document.getElementById('nextBtn');
