@@ -1608,6 +1608,13 @@ document.querySelectorAll('.lead-form').forEach((form) => {
     }
 
     if (typeof fbq === 'function') {
+      // Manual advanced matching: re-init the pixel with the customer's data
+      // right before Lead. The pixel hashes the values (SHA-256) itself.
+      // ph: digits only with country code 7, no "+"; fn: first name, lowercase.
+      fbq('init', '1737272540709380', {
+        ph: '7' + phoneInput.value.replace(/\D/g, ''),
+        fn: nameInput.value.trim().split(/\s+/)[0].toLowerCase()
+      });
       fbq('track', 'Lead', { content_name: form.dataset.source || '' });
     }
 
